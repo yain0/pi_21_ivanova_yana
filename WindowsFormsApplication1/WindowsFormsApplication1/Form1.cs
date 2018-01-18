@@ -1,4 +1,5 @@
 ﻿using System;
+using NLog;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,6 +17,7 @@ namespace WindowsFormsApplication1
 
         Prichal prichal;
         Form2 form;
+        private Logger log;
         public Form1()
         {
             InitializeComponent();
@@ -64,31 +66,39 @@ namespace WindowsFormsApplication1
 
         private void AddBoat(Transport boat)
         {
+
             if (boat != null)
             {
-                int place = prichal.PutBoatPrichal(boat);
-                if (place > -1)
+                try
                 {
+
+                    int place = prichal.PutBoatPrichal(boat);
                     Draw();
                     MessageBox.Show("Ваше место: " + place);
                 }
-                else
+                catch (PrichalOverflowException ex)
                 {
-                    MessageBox.Show("Не удалось поставить");
+                    MessageBox.Show(ex.Message, "Ошибка переполнения", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Общая ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
+            
             if (listBox1.SelectedIndex > -1)
             {
                 string level = listBox1.Items[listBox1.SelectedIndex].ToString();
                 if (maskedTextBox1.Text != "")
                 {
-                    Transport boat = prichal.GetBoatPrichal(Convert.ToInt32(maskedTextBox1.Text));
-                    if (boat != null)
+                    try
                     {
+                        Transport boat = prichal.GetBoatPrichal(Convert.ToInt32(maskedTextBox1.Text));
+
                         Bitmap bmp = new Bitmap(pictureBox2.Width, pictureBox2.Height);
                         Graphics gr = Graphics.FromImage(bmp);
                         boat.setPosition(5, 5);
@@ -96,9 +106,13 @@ namespace WindowsFormsApplication1
                         pictureBox2.Image = bmp;
                         Draw();
                     }
-                    else
+                    catch (PrichalIndexOutOfRangeException ex)
                     {
-                        MessageBox.Show("Извините, на этом месте нет машины");
+                        MessageBox.Show(ex.Message, "Неверный номер", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Общая ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
                 }
@@ -107,15 +121,43 @@ namespace WindowsFormsApplication1
 
         private void button4_Click(object sender, EventArgs e)
         {
-            prichal.LevelDown();
-            listBox1.SelectedIndex = prichal.getCurrentLevel;
+            try
+            {
+                prichal.LevelDown();
+                listBox1.SelectedIndex = prichal.getCurrentLevel;
+            }
+            catch (PrichalLevelException ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка уровня", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Общая ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            log.Info("Переходим на уровень ниже. Текущий уровень: " + prichal.getCurrentLevel);
             Draw();
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            prichal.LevelUp();
-            listBox1.SelectedIndex = prichal.getCurrentLevel;
+            try
+            {
+                prichal.LevelUp();
+                listBox1.SelectedIndex = prichal.getCurrentLevel;
+
+
+            }
+            catch (PrichalLevelException ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка уровня", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Общая ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            log.Info("Переходим на уровень выше. Текущий уровень: " + prichal.getCurrentLevel);
+
             Draw();
         }
 
@@ -126,6 +168,7 @@ namespace WindowsFormsApplication1
 
         private void загрузитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            log.Info("Загружаем файл");
             if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 if (prichal.LoadData(openFileDialog1.FileName))
@@ -145,6 +188,7 @@ namespace WindowsFormsApplication1
 
         private void сохранитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            log.Info("Созраняем файл");
             if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 if (prichal.SaveData(saveFileDialog1.FileName))

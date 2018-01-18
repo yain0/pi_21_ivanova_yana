@@ -30,9 +30,13 @@ namespace WindowsFormsApplication1
         }
         public void LevelUp()
         {
-            if (currentLevel + 1 < prichalStages.Count)
+            if (currentLevel + 1 < 5)
             {
                 currentLevel++;
+            }
+            else
+            {
+                throw new PrichalLevelException();
             }
         }
         public void LevelDown()
@@ -40,6 +44,10 @@ namespace WindowsFormsApplication1
             if (currentLevel > 0)
             {
                 currentLevel--;
+            }
+            else
+            {
+                throw new PrichalLevelException();
             }
         }
         public int PutBoatPrichal(Transport boat)
