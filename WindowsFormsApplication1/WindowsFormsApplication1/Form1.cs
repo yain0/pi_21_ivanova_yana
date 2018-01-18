@@ -21,6 +21,7 @@ namespace WindowsFormsApplication1
         public Form1()
         {
             InitializeComponent();
+            log = LogManager.GetCurrentClassLogger();
             prichal = new Prichal(5);
             for (int i = 1; i < 6; i++)
             {
@@ -58,6 +59,7 @@ namespace WindowsFormsApplication1
 
         private void button1_Click(object sender, EventArgs e)
         {
+            log.Info("Заказываем лодку");
             form = new Form2();
             form.AddEvent(AddBoat);
             form.Show();
@@ -89,7 +91,7 @@ namespace WindowsFormsApplication1
 
         private void button3_Click(object sender, EventArgs e)
         {
-            
+            log.Info("Забираем лодку");
             if (listBox1.SelectedIndex > -1)
             {
                 string level = listBox1.Items[listBox1.SelectedIndex].ToString();
@@ -202,6 +204,11 @@ namespace WindowsFormsApplication1
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            prichal.Sort();
         }
     }
 }

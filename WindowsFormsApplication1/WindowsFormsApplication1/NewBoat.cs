@@ -7,8 +7,70 @@ using System.Drawing;
 
 namespace WindowsFormsApplication1
 {
-    public class NewBoat : Boat
+    public class NewBoat : Boat, IComparable<NewBoat>, IEquatable<Boat>
     {
+        public int CompareTo(NewBoat other)
+        {
+            var res = (this is Boat).CompareTo(other is Boat);
+            if (res != 0)
+            {
+                return res;
+            }
+            if (vint != other.vint)
+            {
+                return vint.CompareTo(other.vint);
+            }
+            if (kabina != other.kabina)
+            {
+                return kabina.CompareTo(other.kabina);
+            }
+            if (dopColor != other.dopColor)
+            {
+                dopColor.Name.CompareTo(other.dopColor.Name);
+            }
+            return 0;
+        }
+        public bool Equals(NewBoat other)
+        {
+            var res = (this is Boat).Equals(other is Boat);
+            if (!res)
+            {
+                return res;
+            }
+            if (vint != other.vint)
+            {
+                return false;
+            }
+            if (kabina != other.kabina)
+            {
+                return false;
+            }
+            if (dopColor != other.dopColor)
+            {
+                return false;
+            }
+            return true;
+        }
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+            NewBoat boatObj = obj as NewBoat;
+            if (boatObj == null)
+            {
+                return false;
+            }
+            else
+            {
+                return Equals(boatObj);
+            }
+        }
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
         private bool vint;
         private bool kabina;
         private Color dopColor;

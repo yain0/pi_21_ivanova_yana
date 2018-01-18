@@ -65,6 +65,7 @@
     </Compile>
     <Compile Include="NewBoat.cs" />
     <Compile Include="Prichal.cs" />
+    <Compile Include="PrichalAlreadyHaveException.cs" />
     <Compile Include="PrichalIndexOutOfRangeException.cs" />
     <Compile Include="PrichalLevelException.cs" />
     <Compile Include="PrichalOverflowException.cs" />

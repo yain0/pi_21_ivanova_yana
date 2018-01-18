@@ -61,15 +61,18 @@ namespace WindowsFormsApplication1
         public void Draw(Graphics g)
         {
             DrawMarking(g);
-            for (int i = 0; i < countPlaces; i++)
+            int i = 0;
+            foreach (var boat in prichalStages[currentLevel])
             {
-                var boat = prichalStages[currentLevel][i];
-                if (boat != null)
-                {
-                    boat.setPosition(5 + i / 5 * placeSizeWidth + 5, i % 5 * placeSizeHeight + 15);
-                    boat.drawBoat(g);
-                }
+
+                boat.setPosition(5 + i / 5 * placeSizeWidth + 5, i % 5 * placeSizeHeight + 15);
+                boat.drawBoat(g);
+                i++;
             }
+            }
+        public void Sort()
+        {
+            prichalStages.Sort();
         }
         private void DrawMarking(Graphics g)
         {
@@ -92,6 +95,7 @@ namespace WindowsFormsApplication1
                 g.DrawLine(pen, i * placeSizeWidth, 0, i * placeSizeWidth, 400);
             }
         }
+        
         public bool SaveData(string filename)
         {
             if (File.Exists(filename))
