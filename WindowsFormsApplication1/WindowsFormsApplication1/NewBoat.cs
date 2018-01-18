@@ -1,49 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace WindowsFormsApplication1
 {
     public class NewBoat : Boat
     {
-        private bool kabina;
         private bool vint;
+        private bool kabina;
         private Color dopColor;
         public NewBoat(int maxSpeed, int maxCountPassenger, double weight, Color color,
-            bool kabina, bool vint, Color dopColor) :
+            bool vint, bool kabina, Color dopColor) :
             base(maxSpeed, maxCountPassenger, weight, color)
         {
-            this.kabina = kabina;
             this.vint = vint;
+            this.kabina = kabina;
             this.dopColor = dopColor;
         }
         protected override void drawLightBoat(Graphics g)
         {
+            if (vint)
+            {
+                Pen pen3 = new Pen(Color.Blue, 4);
+                g.DrawLine(pen3, startPosX - 7, startPosY - 5, startPosX + 10, startPosY + 10);
+                g.DrawLine(pen3, startPosX - 7, startPosY + 25, startPosX + 10, startPosY + 10);
+                g.DrawLine(pen3, startPosX - 7, startPosY + 10, startPosX + 10, startPosY + 10);
+
+
+            }
             if (kabina)
             {
-                Pen pen = new Pen(dopColor);
-                g.DrawLine(pen, startPosX, startPosY, startPosX, startPosY-20);
-                g.DrawLine(pen, startPosX, startPosY - 20, startPosX+20, startPosY-20);
-                g.DrawLine(pen, startPosX+20, startPosY - 20, startPosX+20, startPosY);
+                Pen pen4 = new Pen(dopColor, 4);
+                g.DrawRectangle(pen4, startPosX + 10, startPosY, 20, 20);
 
 
-
-
-            }
-            if(vint)
-            {
-                Pen pen = new Pen(Color.Black);
-                g.DrawLine(pen, startPosX, startPosY, startPosX-10, startPosY - 10);
-                g.DrawLine(pen, startPosX, startPosY, startPosX -10, startPosY);
-                g.DrawLine(pen, startPosX, startPosY, startPosX -10, startPosY+10);
             }
             base.drawLightBoat(g);
-            Brush br = new SolidBrush(dopColor);
-            g.FillRectangle(br, startPosX, startPosY-20, 20, 20);
-            
+            //Pen pen = new Pen(ColorBody, 5);
+            // 
+
+            // 
         }
     }
 }

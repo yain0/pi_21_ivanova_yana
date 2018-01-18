@@ -12,104 +12,114 @@ namespace WindowsFormsApplication1
 {
     public partial class Form1 : Form
     {
-        Color color;
-        Color dopColor;
-        int maxSpeed;
-        int maxCountPass;
-        int weight;
 
 
-        private Transport inter;
+        Prichal prichal;
         public Form1()
         {
             InitializeComponent();
-            color = Color.Yellow;
-            dopColor = Color.Green;
-            maxSpeed = 150;
-            maxCountPass = 4;
-            weight = 1500;
-            button1.BackColor = color;
-            button2.BackColor = dopColor;
-        }
-        private bool checkFields()
-        {
-            if (!int.TryParse(textBox1.Text, out maxSpeed))
+            prichal = new Prichal(5);
+            for (int i = 1; i < 6; i++)
             {
-                return false;
+                listBox1.Items.Add("Уровень " + i);
             }
-            if (!int.TryParse(textBox2.Text, out maxCountPass))
-            {
-                return false;
-            }
-            if (!int.TryParse(textBox3.Text, out weight))
-            {
-                return false;
-            }
-            return true;
+            listBox1.SelectedIndex = prichal.getCurrentLevel;
+
+            Draw();
         }
-        private void Form1_Load(object sender, EventArgs e)
+        /*private void pictureBox1_Click(object sender, EventArgs e)
         {
+            Bitmap bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            Graphics gr = Graphics.FromImage(bmp);
+            prichal.Draw(gr, pictureBox1.Width, pictureBox1.Height);
+            pictureBox1.Image = bmp;
 
-        }
-
-        private void label1_Click(object sender, EventArgs e)
+        }*/
+        private void Draw()
         {
+            if (listBox1.SelectedIndex > -1)
+            {
+                Bitmap bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+                Graphics gr = Graphics.FromImage(bmp);
+                prichal.Draw(gr, pictureBox1.Width, pictureBox1.Height);
+                pictureBox1.Image = bmp;
+            }
 
         }
 
-        private void label4_Click(object sender, EventArgs e)
+
+        private void pictureBox1_Click(object sender, EventArgs e)
         {
 
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            ColorDialog cd = new ColorDialog();
-            if (cd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            ColorDialog dialog = new ColorDialog();
+            if (dialog.ShowDialog() == DialogResult.OK)
             {
-                color = cd.Color;
-                button1.BackColor = color;
+                var boat = new Boat(100, 4, 1000, dialog.Color);
+                int place = prichal.PutBoatPrichal(boat);
+                Draw();
+                MessageBox.Show("Ваше место: " + place);
+
             }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            ColorDialog cd = new ColorDialog();
-            if (cd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            ColorDialog dialog = new ColorDialog();
+            if (dialog.ShowDialog() == DialogResult.OK)
             {
-                dopColor = cd.Color;
-                button2.BackColor = dopColor;
+                ColorDialog dialogDop = new ColorDialog();
+                if (dialogDop.ShowDialog() == DialogResult.OK)
+                {
+                    var boat = new NewBoat(100, 4, 1000, dialog.Color, true, true, dialogDop.Color);
+                    int place = prichal.PutBoatPrichal(boat);
+                    Draw();
+                    MessageBox.Show("Ваше место: " + place);
+                }
             }
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            if (checkFields())
+            if (listBox1.SelectedIndex > -1)
             {
-                inter = new Boat(maxSpeed, maxCountPass, weight, color);
-                Bitmap bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-                Graphics gr = Graphics.FromImage(bmp);
-                inter.drawBoat(gr);
-                pictureBox1.Image = bmp;
+                string level = listBox1.Items[listBox1.SelectedIndex].ToString();
+                if (maskedTextBox1.Text != "")
+                {
+                    Transport boat = prichal.GetBoatPrichal(Convert.ToInt32(maskedTextBox1.Text));
+                    if (boat != null)
+                    {
+                        Bitmap bmp = new Bitmap(pictureBox2.Width, pictureBox2.Height);
+                        Graphics gr = Graphics.FromImage(bmp);
+                        boat.setPosition(5, 5);
+                        boat.drawBoat(gr);
+                        pictureBox2.Image = bmp;
+                        Draw();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Извините, на этом месте нет машины");
+                    }
+
+                }
             }
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            inter = new NewBoat(100, 50, 1000, color, true,true, dopColor);
-            Bitmap bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-            Graphics gr = Graphics.FromImage(bmp);
-            inter.drawBoat(gr);
-            pictureBox1.Image = bmp;
+            prichal.LevelDown();
+            listBox1.SelectedIndex = prichal.getCurrentLevel;
+            Draw();
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            inter = new NewBoat(150, 4, 1000, Color.Black, true,true, Color.Yellow);
-            Bitmap bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-            Graphics gr = Graphics.FromImage(bmp);
-            inter.drawBoat(gr);
-            pictureBox1.Image = bmp;
+            prichal.LevelUp();
+            listBox1.SelectedIndex = prichal.getCurrentLevel;
+            Draw();
         }
     }
 }
