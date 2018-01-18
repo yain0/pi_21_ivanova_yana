@@ -20,6 +20,20 @@ namespace WindowsFormsApplication1
             this.kabina = kabina;
             this.dopColor = dopColor;
         }
+        public NewBoat(string info) : base(info)
+        {
+            string[] strs = info.Split(';');
+            if (strs.Length == 7)
+            {
+                MaxSpeed = Convert.ToInt32(strs[0]);
+                MaxCountPassengers = Convert.ToInt32(strs[1]);
+                Weight = Convert.ToInt32(strs[2]);
+                ColorBody = Color.FromName(strs[3]);
+                vint = Convert.ToBoolean(strs[4]);
+                kabina = Convert.ToBoolean(strs[5]);
+                dopColor = Color.FromName(strs[6]);
+            }
+        }
         protected override void drawLightBoat(Graphics g)
         {
             if (vint)
@@ -48,6 +62,10 @@ namespace WindowsFormsApplication1
         {
             dopColor = color;
         }
-    
+        public override string getInfo()
+        {
+            return MaxSpeed + ";" + MaxCountPassengers + ";" + Weight + ";" + ColorBody.Name + ";" + vint + ";" + kabina + ";" + dopColor.Name;
+        }
+
     }
 }
