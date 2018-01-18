@@ -21,7 +21,7 @@ namespace WindowsFormsApplication1
         {
             if (p.places.Count == p.maxCount)
             {
-                return -1;
+                throw new PrichalOverflowException();
             }
             for (int i = 0; i < p.places.Count; i++)
             {
@@ -45,7 +45,7 @@ namespace WindowsFormsApplication1
                 return boat;
             }
 
-            return p.defaultValue;
+            throw new PrichalIndexOutOfRangeException();
         }
         private bool CheckFreePlace(int index)
         {
