@@ -49,7 +49,7 @@ namespace WindowsFormsApplication1
         {
             return prichalStages[currentLevel] - ticket;
         }
-        public void Draw(Graphics g, int width, int height)
+        public void Draw(Graphics g)
         {
             DrawMarking(g);
             for (int i = 0; i < countPlaces; i++)

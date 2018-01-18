@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApplication1
 {
-    interface Transport
+    public interface Transport
     {
         void moveBoat(Graphics g);
         void drawBoat(Graphics g);
         void setPosition(int x, int y);
         void loadPassenger(int count);
         int getPassenger();
+        void setMainColor(Color color);
     }
 }
