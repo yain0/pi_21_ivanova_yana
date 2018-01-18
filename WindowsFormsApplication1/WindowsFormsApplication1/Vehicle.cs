@@ -9,8 +9,8 @@ namespace WindowsFormsApplication1
 {
     public abstract class Vehicle : Transport
     {
-        protected float startPosX;
-        protected float startPosY;
+        protected int startPosX;
+        protected int startPosY;
         protected int countPassengers;
         public virtual int MaxCountPassengers { protected set; get; }
         public virtual int MaxSpeed { protected set; get; }
