@@ -15,6 +15,7 @@ namespace WindowsFormsApplication1
 
 
         Prichal prichal;
+        Form2 form;
         public Form1()
         {
             InitializeComponent();
@@ -41,7 +42,7 @@ namespace WindowsFormsApplication1
             {
                 Bitmap bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
                 Graphics gr = Graphics.FromImage(bmp);
-                prichal.Draw(gr, pictureBox1.Width, pictureBox1.Height);
+                prichal.Draw(gr);
                 pictureBox1.Image = bmp;
             }
 
@@ -55,29 +56,25 @@ namespace WindowsFormsApplication1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            ColorDialog dialog = new ColorDialog();
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                var boat = new Boat(100, 4, 1000, dialog.Color);
-                int place = prichal.PutBoatPrichal(boat);
-                Draw();
-                MessageBox.Show("Ваше место: " + place);
-
-            }
+            form = new Form2();
+            form.AddEvent(AddBoat);
+            form.Show();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+
+        private void AddBoat(Transport boat)
         {
-            ColorDialog dialog = new ColorDialog();
-            if (dialog.ShowDialog() == DialogResult.OK)
+            if (boat != null)
             {
-                ColorDialog dialogDop = new ColorDialog();
-                if (dialogDop.ShowDialog() == DialogResult.OK)
+                int place = prichal.PutBoatPrichal(boat);
+                if (place > -1)
                 {
-                    var boat = new NewBoat(100, 4, 1000, dialog.Color, true, true, dialogDop.Color);
-                    int place = prichal.PutBoatPrichal(boat);
                     Draw();
                     MessageBox.Show("Ваше место: " + place);
+                }
+                else
+                {
+                    MessageBox.Show("Не удалось поставить");
                 }
             }
         }

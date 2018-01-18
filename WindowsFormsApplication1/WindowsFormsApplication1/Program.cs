@@ -6,6 +6,7 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication1
 {
+    public delegate void myDel(WindowsFormsApplication1.Transport boat);
     static class Program
     {
         /// <summary>

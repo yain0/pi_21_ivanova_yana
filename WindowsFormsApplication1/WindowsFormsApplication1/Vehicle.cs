@@ -36,5 +36,10 @@ namespace WindowsFormsApplication1
             countPassengers = 0;
             return count;
         }
+
+        public void setMainColor(Color color)
+        {
+            ColorBody = color;
+        }
     }
 }

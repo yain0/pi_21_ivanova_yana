@@ -44,5 +44,10 @@ namespace WindowsFormsApplication1
 
             // 
         }
+            public void setDopColor(Color color)
+        {
+            dopColor = color;
+        }
+    
     }
 }
