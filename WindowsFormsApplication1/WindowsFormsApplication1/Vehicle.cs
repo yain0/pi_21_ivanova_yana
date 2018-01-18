@@ -41,5 +41,10 @@ namespace WindowsFormsApplication1
         {
             ColorBody = color;
         }
+        public virtual string getInfo()
+        {
+            string info = "";
+            return info;
+        }
     }
 }
