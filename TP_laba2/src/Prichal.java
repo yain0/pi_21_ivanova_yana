@@ -1,47 +1,66 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 public class Prichal {
-	ClassArray<Transport> prichal;
+
+	ArrayList<ClassArray<Transport>> prichal;
+
 	int countPlaces = 20;
 
-    int placeSizeWidth = 210;
-    int placeSizeHeight = 80;
-	public Prichal() {
-		prichal = new ClassArray<Transport>(countPlaces, null);
-	}
+	int placesSizeWidth = 210;
+	int placesSizeHeight = 80;
+	int currentLevel;
 
-	public int PutNewBoatInPrichal(Transport boat) {
-		return prichal.add(prichal, boat);
-	}
-
-	public Transport GetNewBoatFromPrichal(int index) {
-		return prichal.dec(prichal, index);
-	}
-
-	public void Draw(Graphics g) {
-		drawPrichal(g);
-		for (int i = 0; i < countPlaces; i++) {
-			Transport boat = prichal.getObject(i);
-			if (boat != null) {
-				boat.setPosition(5 + i / 5 * placeSizeWidth + 15, i % 5 * placeSizeHeight + 30);
-				boat.drawVehicle(g);
-			}
+	public Prichal(int countStages) {
+		prichal = new ArrayList<>();
+		for (int i = 0; i < countStages; ++i) {
+			prichal.add(new ClassArray<Transport>(countPlaces, null));
 		}
 	}
 
-	public void drawPrichal(Graphics g) {
-	       
-        g.setColor(Color.WHITE);
-
-        g.fillRect(0, 0, (countPlaces / 5) * placeSizeWidth, 480);
-        g.setColor(Color.black);
-        for (int i=0;i<countPlaces/5;i++) {
-            for (int j=0;j<6;++j) {
-                g.drawLine(i * placeSizeWidth, j * placeSizeHeight, i * placeSizeWidth + 110, j * placeSizeHeight);
-            }
-            g.drawLine(i*placeSizeWidth,0,i*placeSizeWidth,400);
-        
-    }
+	public int getCurrentLevel() {
+		return currentLevel;
 	}
+
+	public void setCurrentLevel(int currentLevel) {
+		this.currentLevel = currentLevel;
+	}
+
+	public int PutBoatInPrichal(Transport boat) {
+		return prichal.get(currentLevel).Add(boat);
+	}
+
+	public Transport GetBoatInPrichal(int ticket) {
+		return prichal.get(currentLevel).Get(ticket);
+
+	}
+
+	public void Draw(Graphics g) {
+		drawBoat(g);
+		for (int i = 0; i < countPlaces; i++) {
+
+			Transport boat = prichal.get(currentLevel).GetBoat(i);
+			if (boat != null) {
+				boat.setPosition(5 + i / 5 * placesSizeWidth + 15, i % 5 * placesSizeHeight + 30);
+				boat.drawVehicle(g);
+			}
+		}
+
+	}
+
+	public void drawBoat(Graphics g) {
+
+		g.setColor(Color.WHITE);
+
+		g.fillRect(0, 0, (countPlaces / 5) * placesSizeWidth, 480);
+		g.setColor(Color.black);
+		for (int i = 0; i < countPlaces / 5; i++) {
+			for (int j = 0; j < 6; ++j) {
+				g.drawLine(i * placesSizeWidth, j * placesSizeHeight, i * placesSizeWidth + 110, j * placesSizeHeight);
+			}
+			g.drawLine(i * placesSizeWidth, 0, i * placesSizeWidth, 400);
+		}
+	}
+
 }

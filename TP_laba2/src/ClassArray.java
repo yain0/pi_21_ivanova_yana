@@ -1,53 +1,55 @@
-import java.util.ArrayList;
 
-public class ClassArray<T> {
-	private ArrayList<T> places;
+import java.util.HashMap;
+import java.util.Map;
+
+public class ClassArray<T extends Transport> {
+
+	private Map<Integer, T> places;
+
+	private int maxCount;
+
 	private T defaultValue;
 
 	public ClassArray(int size, T defVal) {
-		defaultValue = null;
-		places = new ArrayList<T>();
-		for (int i = 0; i < size; i++) {
-			places.add(i, defVal);
-		}
+		defaultValue = defVal;
+		places = new HashMap<>();
+		maxCount = size;
 	}
 
-	public int add(ClassArray<T> p, T boat) {
-		for (int i = 0; i < p.places.size(); i++) {
-			if (p.checkFreePlace(i)) {
-				p.places.set(i, boat);
-				return i;
-			}
-		}
-		return -1;
-	}
-
-	private boolean checkFreePlace(int index) {
-		if (index < 0 || index > places.size()) {
-			return false;
-		}
-		if (places.get(index) == null) {
-			return true;
-		}
-		if (places.get(index).equals(defaultValue)) {
-			return true;
-		}
-		return false;
-	}
-
-	public T dec(ClassArray<T> p, int index) {
-		if (!p.checkFreePlace(index)) {
-			T boat = p.places.get(index);
-			p.places.set(index, null);
-			return boat;
-		}
-		return p.defaultValue;
-	}
-
-	public T getObject(int ind) {
-		if (ind > -1 && ind < places.size()) {
-			return places.get(ind);
+	public T GetBoat(int index) {
+		if (places.containsKey(index)) {
+			return places.get(index);
 		}
 		return defaultValue;
 	}
+
+	public int Add(T boat) {
+		if (places.size() == maxCount) {
+			return -1;
+		}
+
+		for (int i = 0; i < places.size(); i++) {
+			if (CheakFreePlace(i)) {
+				places.put(i, boat);
+				return i;
+			}
+		}
+		places.put(places.size(), boat);
+		return places.size() - 1;
+	}
+
+	public T Get(int index) {
+		if (places.containsKey(index)) {
+			return places.remove(index);
+		}
+		return defaultValue;
+	}
+
+	private boolean CheakFreePlace(int index) {
+		return !places.containsKey(index);
+
+	}
+
+
+
 }
