@@ -1,22 +1,27 @@
 import java.awt.Graphics;
 
+import javax.swing.JList;
 import javax.swing.JPanel;
 
 public class PrichalPanel extends JPanel {
-	private Prichal aquarium;
+	private Prichal prichal;
+	JList listBoxLevels;
 	
-	public PrichalPanel(Prichal aq){
-		updateAquariumPanel(aq);
+	public PrichalPanel(Prichal pr){
+		updatePrichalPanel(pr);
 	}
 	
-	public void updateAquariumPanel(Prichal aq){
-		this.aquarium=aq;
+	public void updatePrichalPanel(Prichal pr){
+		this.prichal=pr;
 		repaint();
 	}
-	
+	public PrichalPanel(Prichal prichal, JList listBoxLevels) {
+		this.prichal = prichal;
+		this.listBoxLevels = listBoxLevels;
+	}
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		aquarium.Draw(g);
+		prichal.Draw(g);
 	}
 }
