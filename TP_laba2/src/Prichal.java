@@ -3,10 +3,10 @@ import java.awt.Graphics;
 
 public class Prichal {
 	ClassArray<Transport> prichal;
-	int countPlaces = 8;
-	int placeSizeWidth = 300;
-	int placeSizeHeight = 80;
+	int countPlaces = 20;
 
+    int placeSizeWidth = 210;
+    int placeSizeHeight = 80;
 	public Prichal() {
 		prichal = new ClassArray<Transport>(countPlaces, null);
 	}
@@ -24,22 +24,24 @@ public class Prichal {
 		for (int i = 0; i < countPlaces; i++) {
 			Transport boat = prichal.getObject(i);
 			if (boat != null) {
-				boat.setPosition(50 + i / 4 * (placeSizeWidth + 10) + 5, i % 4 * (placeSizeHeight + 20) + 45);
+				boat.setPosition(5 + i / 5 * placeSizeWidth + 15, i % 5 * placeSizeHeight + 30);
 				boat.drawVehicle(g);
 			}
 		}
 	}
 
-	private void drawPrichal(Graphics g) {
-		for (int i = 0; i < countPlaces / 4; i++) {
-			for (int j = 0; j < 4; j++) {
-				g.setColor(Color.BLUE);
-				g.fillRect(10 * (i + 1) + i * placeSizeWidth, 20 * (j + 1) + j * placeSizeHeight, placeSizeWidth,
-						placeSizeHeight);
-				g.setColor(Color.BLACK);
-				g.drawRect(10 * (i + 1) + i * placeSizeWidth, 20 * (j + 1) + j * placeSizeHeight, placeSizeWidth,
-						placeSizeHeight);
-			}
-		}
+	public void drawPrichal(Graphics g) {
+	       
+        g.setColor(Color.WHITE);
+
+        g.fillRect(0, 0, (countPlaces / 5) * placeSizeWidth, 480);
+        g.setColor(Color.black);
+        for (int i=0;i<countPlaces/5;i++) {
+            for (int j=0;j<6;++j) {
+                g.drawLine(i * placeSizeWidth, j * placeSizeHeight, i * placeSizeWidth + 110, j * placeSizeHeight);
+            }
+            g.drawLine(i*placeSizeWidth,0,i*placeSizeWidth,400);
+        
+    }
 	}
 }
