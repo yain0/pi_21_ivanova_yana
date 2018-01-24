@@ -28,9 +28,7 @@ namespace WindowsFormsApplication1
                 g.DrawLine(pen3, startPosX - 7, startPosY - 5, startPosX + 10, startPosY + 10);
                 g.DrawLine(pen3, startPosX - 7, startPosY + 25, startPosX + 10, startPosY + 10);
                 g.DrawLine(pen3, startPosX - 7, startPosY + 10, startPosX + 10, startPosY + 10);
-
-
-            }
+}
             if (kabina)
             {
                 Pen pen4 = new Pen(dopColor, 4);
@@ -39,10 +37,10 @@ namespace WindowsFormsApplication1
 
             }
             base.drawLightBoat(g);
-            //Pen pen = new Pen(ColorBody, 5);
-            // 
-
-            // 
+        }
+            public void setDopColor(Color color)
+        {
+            dopColor = color;
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApplication1
 {
-    interface Transport
+    public interface Transport
     {
         void moveBoat(Graphics g);
         void drawBoat(Graphics g);

@@ -100,30 +100,9 @@ namespace WindowsFormsApplication1
         }
         protected virtual void drawLightBoat(Graphics g)
         {
-
             Pen pen = new Pen(ColorBody, 5);
-            //g.DrawLine(pen, startPosX, startPosY, startPosX+80, startPosY);
-            /*g.DrawLine(pen, startPosX, startPosY, startPosX + 20, startPosY+20);
-            g.DrawLine(pen, startPosX+20, startPosY+20, startPosX + 60, startPosY+20);
-            g.DrawLine(pen, startPosX+60, startPosY+20, startPosX + 80, startPosY);*/
-            // Point[] a = { new Point(startPosX-20, startPosY), new Point(startPosX + 60, startPosY), new Point(startPosX + 40, startPosY + 20), new Point(startPosX, startPosY + 20), };
-            //g.DrawPolygon(pen, a);
-            //Pen pen2 = new Pen(Color.Red, 5);
-            // Point[] b = { new Point(startPosX + 20, startPosY), new Point(startPosX + 20, startPosY-20), new Point(startPosX + 25, startPosY -15), new Point(startPosX+20, startPosY - 10), };
-            // g.DrawPolygon(pen2, b);
             Point[] a = { new Point(startPosX, startPosY + 20), new Point(startPosX + 60, startPosY + 20), new Point(startPosX + 40, startPosY + 35), new Point(startPosX, startPosY + 35) };
             g.DrawPolygon(pen, a);
-            // Pen pen = new Pen(Color.Brown, 5);
-            //Point[] b = { new Point(startPosX+10, startPosY), new Point(startPosX + 10, startPosY-20), new Point(startPosX + 30, startPosY - 20), new Point(startPosX+30, startPosY), };
-            // g.DrawPolygon(pen, b);
-            // g.Dispose();
-
-
-
-
-
         }
-
-
     }
 }

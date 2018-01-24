@@ -1,4 +1,5 @@
 ﻿using System;
+using NLog;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,79 +13,108 @@ namespace WindowsFormsApplication1
 {
     public partial class Form1 : Form
     {
+        Color color;
+        Color dopColor;
+        int maxSpeed;
+        int maxCountPass;
+        int weight;
+        private Transport inter;
 
-
-        Prichal prichal;
         public Form1()
         {
             InitializeComponent();
-            prichal = new Prichal();
-            Draw();
+            
         }
-        /*private void pictureBox1_Click(object sender, EventArgs e)
+        private bool checkFields()
         {
+            if (!int.TryParse(textBox1.Text, out maxSpeed))
+            {
+                return false;
+            }
+            if (!int.TryParse(textBox2.Text, out maxCountPass))
+            {
+                return false;
+            }
+            if (!int.TryParse(textBox3.Text, out weight))
+            {
+                return false;
+            }
+            return true;
+        }
+        private void button3_Click_1(object sender, EventArgs e)
+        {
+            if (checkFields())
+            {
+                inter = new Boat(maxSpeed, maxCountPass, weight, color);
+                Bitmap bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+                Graphics gr = Graphics.FromImage(bmp);
+                inter.drawBoat(gr);
+                pictureBox1.Image = bmp;
+            }
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkFields())
+            {
+                inter = new NewBoat(maxSpeed, maxCountPass, weight, color, checkBox1.Checked, checkBox2.Checked, dopColor);
+                Bitmap bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+                Graphics gr = Graphics.FromImage(bmp);
+                inter.drawBoat(gr);
+                pictureBox1.Image = bmp;
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            inter = new NewBoat(100, 50, 1000, color, true, true, dopColor);
             Bitmap bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             Graphics gr = Graphics.FromImage(bmp);
-            prichal.Draw(gr, pictureBox1.Width, pictureBox1.Height);
+            inter.drawBoat(gr);
             pictureBox1.Image = bmp;
-
-        }*/
-        private void Draw()
-        {
-            Bitmap bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-            Graphics gr = Graphics.FromImage(bmp);
-            prichal.Draw(gr, pictureBox1.Width, pictureBox1.Height);
-            pictureBox1.Image = bmp;
-
         }
 
-
-        private void pictureBox1_Click(object sender, EventArgs e)
+        private void button5_Click(object sender, EventArgs e)
         {
-
+           
+            if (inter != null)
+            {
+                Bitmap bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+                Graphics gr = Graphics.FromImage(bmp);
+                inter.moveBoat(gr);
+                pictureBox1.Image = bmp;
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            ColorDialog dialog = new ColorDialog();
-            if (dialog.ShowDialog() == DialogResult.OK)
+            ColorDialog cd = new ColorDialog();
+            if (cd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                var boat = new Boat(100, 4, 1000, dialog.Color);
-                int place = prichal.PutBoatPrichal(boat);
-                Draw();
-                MessageBox.Show("Ваше место: " + place);
-
+                color = cd.Color;
+                button1.BackColor = color;
             }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            ColorDialog dialog = new ColorDialog();
-            if (dialog.ShowDialog() == DialogResult.OK)
+            ColorDialog cd = new ColorDialog();
+            if (cd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                ColorDialog dialogDop = new ColorDialog();
-                if (dialogDop.ShowDialog() == DialogResult.OK)
-                {
-                    var boat = new NewBoat(100, 4, 1000, dialog.Color, true, true, dialogDop.Color);
-                    int place = prichal.PutBoatPrichal(boat);
-                    Draw();
-                    MessageBox.Show("Ваше место: " + place);
-                }
+                dopColor = cd.Color;
+                button2.BackColor = dopColor;
             }
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
-            if (maskedTextBox1.Text != "")
+            if (checkFields())
             {
-                var boat = prichal.GetBoatPrichal(Convert.ToInt32(maskedTextBox1.Text));
-
-                Bitmap bmp = new Bitmap(pictureBox2.Width, pictureBox2.Height);
+                inter = new NewBoat(maxSpeed, maxCountPass, weight, color, checkBox1.Checked, checkBox2.Checked, dopColor);
+                Bitmap bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
                 Graphics gr = Graphics.FromImage(bmp);
-                boat.setPosition(5, 5);
-                boat.drawBoat(gr);
-                pictureBox2.Image = bmp;
-                Draw();
+                inter.drawBoat(gr);
+                pictureBox1.Image = bmp;
             }
         }
     }
