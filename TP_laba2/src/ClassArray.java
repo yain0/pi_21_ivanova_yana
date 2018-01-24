@@ -12,10 +12,10 @@ public class ClassArray<T> {
 		}
 	}
 
-	public int add(ClassArray<T> p, T crocodile) {
+	public int add(ClassArray<T> p, T boat) {
 		for (int i = 0; i < p.places.size(); i++) {
 			if (p.checkFreePlace(i)) {
-				p.places.set(i, crocodile);
+				p.places.set(i, boat);
 				return i;
 			}
 		}
@@ -37,9 +37,9 @@ public class ClassArray<T> {
 
 	public T dec(ClassArray<T> p, int index) {
 		if (!p.checkFreePlace(index)) {
-			T crocodile = p.places.get(index);
+			T boat = p.places.get(index);
 			p.places.set(index, null);
-			return crocodile;
+			return boat;
 		}
 		return p.defaultValue;
 	}

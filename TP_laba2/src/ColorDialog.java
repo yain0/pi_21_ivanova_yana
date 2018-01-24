@@ -55,7 +55,7 @@ public class ColorDialog extends JDialog {
 		jpColor.add(jpSelectColor, BorderLayout.SOUTH);
 		jpColor.add(jpSelectedColor, BorderLayout.CENTER);
 		jpColor.repaint();
-		
+
 		add(jpButtons, BorderLayout.SOUTH);
 		add(jpColor, BorderLayout.CENTER);
 		pack();

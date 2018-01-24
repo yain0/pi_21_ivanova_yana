@@ -21,6 +21,7 @@ public class Boat extends Vehicle {
 			super.setMaxSpeed(150);
 		}
 	}
+
 	@Override
 	protected void setMaxCountPassengers(int value) {
 		if (value > 0 && value < 16) {
@@ -29,8 +30,6 @@ public class Boat extends Vehicle {
 			super.setMaxCountPassengers(15);
 		}
 	}
-
-	
 
 	@Override
 	public void setWeight(int value) {
@@ -41,9 +40,6 @@ public class Boat extends Vehicle {
 		}
 	}
 
-	
-
-	
 	@Override
 	public void moveVehicle() {
 		startPosX += (int) (getMaxSpeed() * 50 / getWeight() / (countPassengers == 0 ? 1 : countPassengers));
@@ -55,8 +51,8 @@ public class Boat extends Vehicle {
 	}
 
 	protected void drawBoat(Graphics g) {
-g.setColor(getColorBody());
-		
+		g.setColor(getColorBody());
+
 		int x = startPosX;
 		int y = startPosY;
 		int[] xPoints = new int[] { x, x + 60, x + 40, x, x };
@@ -64,7 +60,5 @@ g.setColor(getColorBody());
 		g.fillPolygon(xPoints, yPoints, xPoints.length);
 
 	}
-
-	
 
 }
