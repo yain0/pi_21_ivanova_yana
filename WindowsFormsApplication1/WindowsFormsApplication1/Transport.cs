@@ -14,5 +14,6 @@ namespace WindowsFormsApplication1
         void setPosition(int x, int y);
         void loadPassenger(int count);
         int getPassenger();
+        void setMainColor(Color color);
     }
 }
