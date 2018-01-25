@@ -39,10 +39,7 @@ namespace WindowsFormsApplication1
 
             }
             base.drawLightBoat(g);
-            //Pen pen = new Pen(ColorBody, 5);
-            // 
-
-            // 
+           
         }
         public void setDopColor(Color color)
         {
