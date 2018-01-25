@@ -13,11 +13,11 @@ namespace WindowsFormsApplication1
         private bool kabina;
         private Color dopColor;
         public NewBoat(int maxSpeed, int maxCountPassenger, double weight, Color color,
-            bool vint, bool kabina, Color dopColor) :
+            bool frontSpoiler, bool frontSpoiler2, Color dopColor) :
             base(maxSpeed, maxCountPassenger, weight, color)
         {
-            this.vint = vint;
-            this.kabina = kabina;
+            this.vint = frontSpoiler;
+            this.kabina = frontSpoiler2;
             this.dopColor = dopColor;
         }
         protected override void drawLightBoat(Graphics g)
@@ -28,7 +28,9 @@ namespace WindowsFormsApplication1
                 g.DrawLine(pen3, startPosX - 7, startPosY - 5, startPosX + 10, startPosY + 10);
                 g.DrawLine(pen3, startPosX - 7, startPosY + 25, startPosX + 10, startPosY + 10);
                 g.DrawLine(pen3, startPosX - 7, startPosY + 10, startPosX + 10, startPosY + 10);
-}
+
+
+            }
             if (kabina)
             {
                 Pen pen4 = new Pen(dopColor, 4);
@@ -37,8 +39,9 @@ namespace WindowsFormsApplication1
 
             }
             base.drawLightBoat(g);
+           
         }
-            public void setDopColor(Color color)
+        public void setDopColor(Color color)
         {
             dopColor = color;
         }
